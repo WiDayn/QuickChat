@@ -2,14 +2,12 @@ package UI;
 
 import Chat.Message;
 import Chat.Room;
-import Net.Feedback.QueryRoomFeedback;
 import Net.Request.QueryRoomRequest;
 import Utils.*;
 import Net.Request.PullMessageRequest;
 import Net.Request.SendMessageRequest;
 import Net.ServerConnection;
 import Utils.Utils;
-import jdk.jshell.execution.Util;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +25,7 @@ public class ChatRoom {
     private JComboBox<Integer> comboBox1;
     private JLabel useridLabel;
     private JButton flushRoomButton;
-    private JButton addRoomButton;
+    private JButton JoinRoomButton;
     private JButton pullRoomButton;
     private JButton createRoomButton;
     private JLabel roomName;
@@ -82,6 +80,25 @@ public class ChatRoom {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        JoinRoomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JoinRoom();
+            }
+        });
+
+        pullRoomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PullInRoom();
+            }
+        });
+        createRoomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CreateRoom();
             }
         });
     }
