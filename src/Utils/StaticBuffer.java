@@ -4,4 +4,7 @@ public class StaticBuffer {
     public static String LoginMessage = "";
 
     public static String RegisterMessage = "";
+
+
+    public static boolean ReceiveFeedback = true;
 }

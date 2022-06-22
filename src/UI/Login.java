@@ -55,5 +55,4 @@ public class Login {
             QuickChat.frame.setVisible(true);
         });
     }
-
 }

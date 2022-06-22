@@ -3,17 +3,25 @@ package Chat;
 import Net.Feedback.RegisterFeedback;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room implements Serializable {
 
     private static final long serialVersionUID = -1695936838040146977L;
-    String name;
-    List<User> onlineUser;
-    List<Message> message;
 
-    public Room(String name){
+    private int id;
+    private String name;
+    private List<User> onlineUser = new ArrayList<>();
+    private List<Message> message = new ArrayList<>();
+
+    public Room(int id, String name){
+        this.id = id;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -26,5 +34,14 @@ public class Room implements Serializable {
 
     public List<User> getOnlineUser() {
         return onlineUser;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        // ÷ÿ–¥œ‡µ»≈–∂œ
+        if(obj instanceof Room){
+            return id == ((Room) obj).id;
+        }
+        return false;
     }
 }
