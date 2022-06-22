@@ -1,12 +1,12 @@
 package Net.Request;
 
 import Chat.Message;
-import Chat.User;
 
+import java.io.Serial;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class SendMessageRequest extends Request{
+    @Serial
     private static final long serialVersionUID = -2483948143061662330L;
     Message message;
 

@@ -1,13 +1,11 @@
 package UI;
 
+import Main.QuickChat;
 import Net.Request.LoginRequest;
-import Utils.Utils;
+import Utils.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.List;
 
 public class Login {
     public JPanel root;
@@ -15,20 +13,47 @@ public class Login {
     private JPasswordField passwordField1;
     private JButton LoginButton;
     private JLabel Notice;
+    private JButton RegisterButton;
 
     public Login() {
-        LoginButton.addActionListener(new ActionListener() {
+
+        class UpdateThread extends Thread{
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String user = textField1.getText();
-                String password = String.valueOf(passwordField1.getPassword());
-                LoginRequest req = new LoginRequest(Utils.getNowTimestamp(), "Login", user, password);
-                try {
-                    req.send();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+            public synchronized void run(){
+                while(true){
+                    if(StaticConfig.status.equals("login")){
+                        Notice.setText(StaticBuffer.LoginMessage);
+                    }
+                    if(StaticConfig.status.equals("online")){
+                        QuickChat.frame.setVisible(false);
+                        QuickChat.frame.setContentPane(new ChatRoom().root);
+                        QuickChat.frame.setSize(800, 400);
+                        QuickChat.frame.setVisible(true);
+                        break;
+                    }
                 }
             }
+        }
+
+        LoginButton.addActionListener(e -> {
+            String user = textField1.getText();
+            String password = String.valueOf(passwordField1.getPassword());
+            LoginRequest req = new LoginRequest(Utils.getNowTimestamp(), "Login", user, password);
+            try {
+                req.send();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            UpdateThread updateThread = new UpdateThread();
+            updateThread.start();
+        });
+        RegisterButton.addActionListener(e -> {
+            StaticConfig.status = "register";
+            QuickChat.frame.setVisible(false);
+            QuickChat.frame.setContentPane(new Register().root);
+            QuickChat.frame.setSize(400, 400);
+            QuickChat.frame.setVisible(true);
         });
     }
+
 }

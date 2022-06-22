@@ -5,7 +5,6 @@ import Net.ServerConnection;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Request implements Serializable {

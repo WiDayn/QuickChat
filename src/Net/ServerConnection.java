@@ -1,9 +1,6 @@
 package Net;
 
 import Chat.Message;
-import Net.Feedback.LoginFeedback;
-import Net.Feedback.PullMessageFeedback;
-import UI.ChatRoom;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -25,7 +22,6 @@ public class ServerConnection {
 
     static InputStream inputStream;
     static OutputStream outputStream;
-    static StringBuilder MsgBuffer = new StringBuilder();
 
     static Set<Message> AllMessAge = new HashSet<>();
 
@@ -76,17 +72,14 @@ public class ServerConnection {
     public static class ReceiveMsg extends Thread{
         @Override
         public synchronized void run(){
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(inputStream));
-                Object obj = ois.readObject();
-                if(obj instanceof PullMessageFeedback pullMessageFeedback){
-                    AllMessAge.addAll(pullMessageFeedback.getMessages());
+            while(true){
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(inputStream));
+                    Object obj = ois.readObject();
+                    Handler.handler(obj);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-                if(obj instanceof LoginFeedback loginFeedback){
-
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
     }
