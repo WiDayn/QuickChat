@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class PullMessageRequest extends Request{
+    @Serial
     private static final long serialVersionUID = -5474785724122187430L;
     private Timestamp beginTime;
     private Room room;

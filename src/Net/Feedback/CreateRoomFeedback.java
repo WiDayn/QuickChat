@@ -4,18 +4,18 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class JoinRoomFeedback extends Feedback implements Serializable {
+public class CreateRoomFeedback extends Feedback implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 86952255089070870L;
+    private static final long serialVersionUID = -4470474373876010558L;
 
     private int status;
     private String message;
 
-    JoinRoomFeedback(Timestamp sendTime, String type, int status, String message) {
-        super(sendTime, type);
-        this.status = status;
+    public CreateRoomFeedback(Timestamp sendTime, int status, String message) {
+        super(sendTime, "CreateRoom");
         this.message = message;
+        this.status = status;
     }
 
     public int getStatus() {

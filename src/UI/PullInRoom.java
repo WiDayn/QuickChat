@@ -1,25 +1,31 @@
 package UI;
 
+import Net.Request.PullRoomRequest;
+import Utils.*;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PullInRoom extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField textField1;
+    private JLabel feedbackLabel;
 
     public PullInRoom() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        this.setLocation(300, 300);
-        this.setSize(300, 150);
-        this.setVisible(true);
-
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                String userid = textField1.getText();
+                PullRoomRequest pullRoomRequest = new PullRoomRequest(Utils.getNowTimestamp(), userid, StaticConfig.nowRoomId);
+                try {
+                    pullRoomRequest.send();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -37,11 +43,22 @@ public class PullInRoom extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        java.util.Timer timer = new Timer();
+        timer.schedule(new QueryTask(), 0, 500);
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
+        this.setLocation(300, 300);
+        this.setSize(300, 150);
+        this.setVisible(true);
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
+    private class QueryTask extends TimerTask {
+        @Override
+        public void run(){
+            feedbackLabel.setText(StaticBuffer.PullRoomMessage);
+        }
     }
 
     private void onCancel() {

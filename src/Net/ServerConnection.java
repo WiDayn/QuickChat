@@ -7,6 +7,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
+import java.net.SocketException;
 import java.security.KeyStore;
 import java.util.HashSet;
 import java.util.Set;
@@ -77,6 +78,9 @@ public class ServerConnection {
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(inputStream));
                     Object obj = ois.readObject();
                     Handler.handler(obj);
+                } catch (SocketException e){
+                    System.out.println("服务器断开连接: " + e.getMessage());
+                    break;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

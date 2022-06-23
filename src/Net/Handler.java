@@ -2,10 +2,8 @@ package Net;
 
 import Chat.Room;
 import Chat.User;
-import Net.Feedback.LoginFeedback;
-import Net.Feedback.PullMessageFeedback;
-import Net.Feedback.QueryRoomFeedback;
-import Net.Feedback.RegisterFeedback;
+import Net.Feedback.*;
+import Net.Request.CreateRoomRequest;
 import Utils.StaticBuffer;
 import Utils.StaticConfig;
 
@@ -34,6 +32,18 @@ public class Handler {
             StaticConfig.users.get(StaticConfig.userid).getRoomList().clear();
             StaticConfig.users.get(StaticConfig.userid).getRoomList().addAll(queryRoomFeedback.getRoomList());
             StaticBuffer.ReceiveFeedback = true;
+        }
+        if(obj instanceof QueryOnlineFeedback queryOnlineFeedback){
+            StaticBuffer.OnlineUser.addAll(queryOnlineFeedback.getUserList());
+        }
+        if(obj instanceof JoinRoomFeedback joinRoomFeedback){
+            StaticBuffer.JoinRoomMessage = joinRoomFeedback.getMessage();
+        }
+        if(obj instanceof CreateRoomFeedback createRoomFeedback){
+            StaticBuffer.CreateRoomMessage = createRoomFeedback.getMessage();
+        }
+        if(obj instanceof PullRoomFeedback pullRoomFeedback){
+            StaticBuffer.PullRoomMessage = pullRoomFeedback.getMessage();
         }
     }
 }

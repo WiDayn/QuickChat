@@ -28,6 +28,7 @@ public class Login {
                         QuickChat.frame.setVisible(false);
                         QuickChat.frame.setContentPane(new ChatRoom().root);
                         QuickChat.frame.setSize(800, 400);
+                        QuickChat.frame.setTitle("ChatRoom");
                         QuickChat.frame.setVisible(true);
                         break;
                     }

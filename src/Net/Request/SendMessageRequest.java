@@ -9,9 +9,9 @@ import java.sql.Timestamp;
 public class SendMessageRequest extends Request{
     @Serial
     private static final long serialVersionUID = -2483948143061662330L;
-    Message message;
+    private Message message;
 
-    Room room;
+    private Room room;
 
     public SendMessageRequest(Timestamp sendTime, Message message, Room room) {
         super(sendTime, "SendMsg");

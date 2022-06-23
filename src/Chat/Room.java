@@ -12,7 +12,7 @@ public class Room implements Serializable {
 
     private int id;
     private String name;
-    private List<User> onlineUser = new ArrayList<>();
+    private List<User> UserList = new ArrayList<>();
     private List<Message> message = new ArrayList<>();
 
     public Room(int id, String name){
@@ -32,8 +32,8 @@ public class Room implements Serializable {
         return message;
     }
 
-    public List<User> getOnlineUser() {
-        return onlineUser;
+    public List<User> getUserList() {
+        return UserList;
     }
 
     @Override
