@@ -3,19 +3,25 @@ package UI;
 import Chat.Message;
 import Chat.Room;
 import Chat.User;
+import Files.FilesStream;
 import Net.Request.*;
 import Utils.*;
 import Net.ServerConnection;
 import Utils.Utils;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.*;
 import java.io.*;
+import java.lang.invoke.StringConcatException;
+import java.nio.file.FileStore;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class ChatRoom {
     public JPanel root;
@@ -55,7 +61,7 @@ public class ChatRoom {
             // 初始化
             if(StaticConfig.nowRoomId == -1) StaticConfig.nowRoomId = room.getId();
             comboBox1.addItem(room.getId());
-            StaticConfig.rooms.put(room.getId(), room);
+            if(!StaticConfig.rooms.containsKey(room.getId())) StaticConfig.rooms.put(room.getId(), room);
         }
         timer.schedule(new QueryTask(), 0, 2000);
         timer.schedule(new SendActive(), 0, 300000); // 每30秒确认一次在线
@@ -106,6 +112,34 @@ public class ChatRoom {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new CreateRoom();
+            }
+        });
+        list1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() >= 2){
+                    System.out.println("Click!");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
     }
