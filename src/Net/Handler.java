@@ -3,6 +3,7 @@ package Net;
 import Chat.Room;
 import Chat.User;
 import Net.Feedback.*;
+import Net.Request.QueryUnreadPrivateMessageRequest;
 import Utils.StaticBuffer;
 import Utils.StaticConfig;
 
@@ -41,6 +42,9 @@ public class Handler {
         }
         if(obj instanceof PullRoomFeedback pullRoomFeedback){
             StaticBuffer.PullRoomMessage = pullRoomFeedback.getMessage();
+        }
+        if(obj instanceof QueryUnreadPrivateMessageFeedback queryUnreadPrivateMessageFeedback){
+            StaticConfig.unreadPrivateMessages.addAll(queryUnreadPrivateMessageFeedback.getPrivateMessageList());
         }
     }
 }

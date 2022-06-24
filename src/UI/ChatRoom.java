@@ -1,6 +1,7 @@
 package UI;
 
 import Chat.Message;
+import Chat.PrivateMessage;
 import Chat.Room;
 import Chat.User;
 import Files.FilesStream;
@@ -41,6 +42,7 @@ public class ChatRoom {
     private JButton 上传文件Button;
     private JButton 发送表情Button;
     private JButton 文件列表Button;
+    private JList list2;
 
     public ChatRoom() {
         Timer timer = new Timer();
@@ -63,7 +65,8 @@ public class ChatRoom {
             comboBox1.addItem(room.getId());
             if(!StaticConfig.rooms.containsKey(room.getId())) StaticConfig.rooms.put(room.getId(), room);
         }
-        timer.schedule(new QueryTask(), 0, 2000);
+        timer.schedule(new QueryTask(), 0, 1000); //每秒查询一次消息
+        timer.schedule(new QueryPrivateTask(), 0, 2000); //每秒查询一次私密消息
         timer.schedule(new SendActive(), 0, 300000); // 每30秒确认一次在线
         roomName.setText(StaticConfig.rooms.get(StaticConfig.nowRoomId).getName());
         comboBox1.addActionListener(new ActionListener() {
@@ -118,7 +121,9 @@ public class ChatRoom {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() >= 2){
-                    System.out.println("Click!");
+                    if(list1.getSelectedValue() != null){
+                        new PrivateRoom(list1.getSelectedValue());
+                    }
                 }
             }
 
@@ -154,6 +159,59 @@ public class ChatRoom {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public class QueryPrivateTask extends TimerTask{
+        @Override
+        public void run(){
+            while(StaticBuffer.PrivateLock){
+                try {
+                    synchronized(this){
+                        this.wait();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            StaticBuffer.PrivateLock = true;
+            // 查看有没有未读的私密消息
+            QueryUnreadPrivateMessageRequest queryUnreadPrivateMessageRequest = new QueryUnreadPrivateMessageRequest(Utils.getNowTimestamp(), StaticConfig.users.get(StaticConfig.userid).getUserid());
+            try {
+                queryUnreadPrivateMessageRequest.send();
+                for(PrivateMessage privateMessage : StaticConfig.unreadPrivateMessages){
+                    // 如果当前没有打开和该用户的聊天窗口就打开
+                    if(!StaticBuffer.OpenPrivateMessageWindows.contains(privateMessage.getFrom_user())){
+                        CreatePrivateWindow createPrivateWindow = new CreatePrivateWindow(privateMessage.getFrom_user());
+                        StaticBuffer.OpenPrivateMessageWindows.add(privateMessage.getFrom_user());
+                        createPrivateWindow.start();
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            StaticBuffer.PrivateLock = false;
+            synchronized(this){
+                this.notifyAll();
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public class CreatePrivateWindow extends Thread{
+
+        String fromUser;
+
+        CreatePrivateWindow(String fromUser){
+            this.fromUser = fromUser;
+        }
+        @Override
+        public void run(){
+            new PrivateRoom(fromUser);
         }
     }
 
@@ -197,7 +255,6 @@ public class ChatRoom {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 }

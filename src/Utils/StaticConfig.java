@@ -1,14 +1,13 @@
 package Utils;
 
+import Chat.Message;
+import Chat.PrivateMessage;
 import Chat.Room;
 import Chat.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class StaticConfig {
     public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -20,4 +19,11 @@ public class StaticConfig {
     public static Map<Integer, Room> rooms = new HashMap<>();
 
     public static Map<Integer, User> users = new HashMap<>();
+
+    public static List<User> recentUsers = new ArrayList<>();
+
+    public static List<PrivateMessage> privateMessages = new ArrayList<>();
+
+    public static List<PrivateMessage> unreadPrivateMessages = new ArrayList<>();
+
 }

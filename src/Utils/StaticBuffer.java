@@ -20,4 +20,8 @@ public class StaticBuffer {
     public static String CreateRoomMessage = "";
 
     public static String PullRoomMessage = "";
+
+    public static Set<String> OpenPrivateMessageWindows = new HashSet<>();
+
+    public static boolean PrivateLock = false;
 }
