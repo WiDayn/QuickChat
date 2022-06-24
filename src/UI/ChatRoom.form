@@ -2,259 +2,278 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UI.ChatRoom">
   <grid id="27dc6" binding="root" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="811" height="581"/>
+      <xy x="20" y="20" width="840" height="582"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="68e1f" layout-manager="GridBagLayout">
+      <splitpane id="45fca">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="0.0"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+          <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <continuousLayout value="false"/>
+          <dividerLocation value="114"/>
+          <dividerSize value="5"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="47fd" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <grid id="68e1f" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <model/>
-            </properties>
-          </component>
-          <component id="68a65" class="javax.swing.JButton" binding="flushRoomButton">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="刷新房间"/>
-            </properties>
-          </component>
-          <component id="f9326" class="javax.swing.JButton" binding="JoinRoomButton">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="加入房间"/>
-            </properties>
-          </component>
-          <component id="1ff1b" class="javax.swing.JButton" binding="pullRoomButton">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="拉入房间"/>
-            </properties>
-          </component>
-          <component id="4e991" class="javax.swing.JButton" binding="createRoomButton">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="创建房间"/>
-            </properties>
-          </component>
-          <component id="c7492" class="javax.swing.JLabel" binding="useridLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <horizontalAlignment value="0"/>
-              <labelFor value="1229c"/>
-              <text value="Label"/>
-            </properties>
-          </component>
-          <grid id="fd4a4" layout-manager="GridBagLayout">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="7.0"/>
+              <splitpane position="left"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="aee97" class="javax.swing.JLabel">
+              <component id="47fd" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <model/>
+                </properties>
+              </component>
+              <component id="68a65" class="javax.swing.JButton" binding="flushRoomButton">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="0.0"/>
                 </constraints>
                 <properties>
-                  <text value="最近联系人"/>
+                  <text value="刷新房间"/>
                 </properties>
               </component>
-              <component id="99e83" class="javax.swing.JList" binding="list2" default-binding="true">
+              <component id="f9326" class="javax.swing.JButton" binding="JoinRoomButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                  <gridbag weightx="1.0" weighty="7.0"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value="加入房间"/>
+                </properties>
               </component>
-            </children>
-          </grid>
-        </children>
-      </grid>
-      <grid id="ad4e3" layout-manager="GridBagLayout">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="10.0" weighty="10.0"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <splitpane id="6c0af">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="200" height="200"/>
-              </grid>
-              <gridbag weightx="10.0" weighty="30.0"/>
-            </constraints>
-            <properties>
-              <dividerLocation value="550"/>
-              <dividerSize value="5"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <grid id="ea0da" layout-manager="GridBagLayout">
+              <component id="1ff1b" class="javax.swing.JButton" binding="pullRoomButton">
                 <constraints>
-                  <splitpane position="left"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="拉入房间"/>
+                </properties>
+              </component>
+              <component id="4e991" class="javax.swing.JButton" binding="createRoomButton">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="创建房间"/>
+                </properties>
+              </component>
+              <component id="c7492" class="javax.swing.JLabel" binding="useridLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <labelFor value="1229c"/>
+                  <text value="Label"/>
+                </properties>
+              </component>
+              <grid id="fd4a4" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="7.0"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="a8846" class="javax.swing.JLabel" binding="roomName">
+                  <component id="aee97" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="1.0" weighty="0.0"/>
                     </constraints>
                     <properties>
-                      <text value="Label"/>
+                      <text value="最近联系人"/>
                     </properties>
                   </component>
-                  <scrollpane id="1229c" binding="Jspane">
+                  <scrollpane id="5d584">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="10.0" weighty="10.0"/>
+                      <gridbag weightx="0.0" weighty="10.0"/>
                     </constraints>
-                    <properties>
-                      <verticalScrollBarPolicy value="20"/>
-                    </properties>
+                    <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="55a56" class="javax.swing.JTextArea" binding="textArea1">
+                      <component id="99e83" class="javax.swing.JList" binding="list2" default-binding="true">
                         <constraints/>
-                        <properties>
-                          <editable value="false"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
-                  </scrollpane>
-                </children>
-              </grid>
-              <grid id="1e889" layout-manager="BorderLayout" hgap="0" vgap="0">
-                <constraints>
-                  <splitpane position="right"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="bffe6" class="javax.swing.JLabel">
-                    <constraints border-constraint="North"/>
-                    <properties>
-                      <text value="在线用户"/>
-                    </properties>
-                  </component>
-                  <scrollpane id="9413c" binding="JSpane2">
-                    <constraints border-constraint="Center"/>
-                    <properties>
-                      <horizontalScrollBarPolicy value="31"/>
-                      <verticalScrollBarPolicy value="20"/>
-                    </properties>
-                    <border type="none"/>
-                    <children>
-                      <component id="edee2" class="javax.swing.JList" binding="list1" default-binding="true">
-                        <constraints/>
-                        <properties>
-                          <background color="-6579052"/>
-                          <model/>
-                        </properties>
+                        <properties/>
                       </component>
                     </children>
                   </scrollpane>
                 </children>
               </grid>
             </children>
-          </splitpane>
-          <grid id="84180" layout-manager="GridBagLayout">
+          </grid>
+          <grid id="ad4e3" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
+              <splitpane position="right"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="15be3" class="javax.swing.JButton" binding="button1" default-binding="true">
+              <splitpane id="6c0af">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag top="0" left="3" bottom="3" right="3" weightx="1.0" weighty="1.0"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="200" height="200"/>
+                  </grid>
+                  <gridbag weightx="10.0" weighty="30.0"/>
                 </constraints>
                 <properties>
-                  <text value="发送"/>
-                </properties>
-              </component>
-              <component id="32d6f" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <gridbag weightx="10.0" weighty="1.0"/>
-                </constraints>
-                <properties/>
-              </component>
-              <toolbar id="fb56a">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="-1" height="20"/>
-                  </grid>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
-                <properties>
-                  <floatable value="false"/>
+                  <dividerLocation value="590"/>
+                  <dividerSize value="5"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="8271" class="javax.swing.JButton" binding="发送表情Button" default-binding="true">
-                    <constraints/>
-                    <properties>
-                      <text value="发送表情"/>
-                    </properties>
-                  </component>
-                  <component id="8581c" class="javax.swing.JButton" binding="上传文件Button" default-binding="true">
-                    <constraints/>
-                    <properties>
-                      <text value="上传文件"/>
-                    </properties>
-                  </component>
-                  <component id="2ec4a" class="javax.swing.JButton" binding="文件列表Button" default-binding="true">
-                    <constraints/>
-                    <properties>
-                      <text value="文件列表"/>
-                    </properties>
-                  </component>
+                  <grid id="ea0da" layout-manager="GridBagLayout">
+                    <constraints>
+                      <splitpane position="left"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="a8846" class="javax.swing.JLabel" binding="roomName">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <scrollpane id="1229c" binding="Jspane">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="10.0" weighty="10.0"/>
+                        </constraints>
+                        <properties>
+                          <verticalScrollBarPolicy value="20"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="55a56" class="javax.swing.JTextArea" binding="textArea1">
+                            <constraints/>
+                            <properties>
+                              <editable value="false"/>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="1e889" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <splitpane position="right"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="bffe6" class="javax.swing.JLabel">
+                        <constraints border-constraint="North"/>
+                        <properties>
+                          <text value="在线用户"/>
+                        </properties>
+                      </component>
+                      <scrollpane id="9413c" binding="JSpane2">
+                        <constraints border-constraint="Center"/>
+                        <properties>
+                          <horizontalScrollBarPolicy value="31"/>
+                          <verticalScrollBarPolicy value="20"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="edee2" class="javax.swing.JList" binding="list1" default-binding="true">
+                            <constraints/>
+                            <properties>
+                              <background color="-6579052"/>
+                              <model/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
                 </children>
-              </toolbar>
+              </splitpane>
+              <grid id="84180" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="15be3" class="javax.swing.JButton" binding="button1" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="3" bottom="3" right="3" weightx="1.0" weighty="1.0"/>
+                    </constraints>
+                    <properties>
+                      <text value="发送"/>
+                    </properties>
+                  </component>
+                  <component id="32d6f" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                      <gridbag weightx="10.0" weighty="1.0"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <toolbar id="fb56a">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="20"/>
+                      </grid>
+                      <gridbag weightx="1.0" weighty="1.0"/>
+                    </constraints>
+                    <properties>
+                      <floatable value="false"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="8271" class="javax.swing.JButton" binding="发送表情Button" default-binding="true">
+                        <constraints/>
+                        <properties>
+                          <text value="发送表情"/>
+                        </properties>
+                      </component>
+                      <component id="8581c" class="javax.swing.JButton" binding="上传文件Button" default-binding="true">
+                        <constraints/>
+                        <properties>
+                          <text value="上传文件"/>
+                        </properties>
+                      </component>
+                      <component id="2ec4a" class="javax.swing.JButton" binding="文件列表Button" default-binding="true">
+                        <constraints/>
+                        <properties>
+                          <text value="文件列表"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </toolbar>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>
-      </grid>
+      </splitpane>
     </children>
   </grid>
 </form>

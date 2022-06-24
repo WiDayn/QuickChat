@@ -20,7 +20,7 @@ public class StaticConfig {
 
     public static Map<Integer, User> users = new HashMap<>();
 
-    public static List<User> recentUsers = new ArrayList<>();
+    public static Map<String, List<String>> recentUsers = new HashMap<>();
 
     public static List<PrivateMessage> privateMessages = new ArrayList<>();
 

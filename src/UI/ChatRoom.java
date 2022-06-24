@@ -4,25 +4,17 @@ import Chat.Message;
 import Chat.PrivateMessage;
 import Chat.Room;
 import Chat.User;
-import Files.FilesStream;
 import Net.Request.*;
 import Utils.*;
 import Net.ServerConnection;
 import Utils.Utils;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 import java.io.*;
-import java.lang.invoke.StringConcatException;
-import java.nio.file.FileStore;
 import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class ChatRoom {
     public JPanel root;
@@ -42,10 +34,24 @@ public class ChatRoom {
     private JButton 上传文件Button;
     private JButton 发送表情Button;
     private JButton 文件列表Button;
-    private JList list2;
+    private JList<String> list2;
 
     public ChatRoom() {
+        // 初始化
+        StaticConfig.recentUsers.put(StaticConfig.users.get(StaticConfig.userid).getUserid(), new ArrayList<>());
+        useridLabel.setText(StaticConfig.users.get(StaticConfig.userid).getUserid());
+        for(Room room : StaticConfig.users.get(StaticConfig.userid).getRoomList()){
+            if(StaticConfig.nowRoomId == -1) StaticConfig.nowRoomId = room.getId();
+            comboBox1.addItem(room.getId());
+            if(!StaticConfig.rooms.containsKey(room.getId())) StaticConfig.rooms.put(room.getId(), room);
+        }
+        roomName.setText(StaticConfig.rooms.get(StaticConfig.nowRoomId).getName());
         Timer timer = new Timer();
+        timer.schedule(new QueryTask(), 0, 1000); //每秒查询一次消息
+        timer.schedule(new QueryPrivateTask(), 0, 1000); //每秒查询一次私密消息
+        timer.schedule(new SendActive(), 0, 300000); // 每30秒确认一次在线
+        timer.schedule(new UpdateTask(), 0, 500); // 每0.5秒更新一次UI显示
+
         button1.addActionListener(e -> {
             String message = textField1.getText();
             Message sendMessage = new Message(StaticConfig.users.get(StaticConfig.userid).getUserid(), Utils.getNowTimestamp(), message);
@@ -58,17 +64,6 @@ public class ChatRoom {
             }
             textField1.setText("");
         });
-        useridLabel.setText(StaticConfig.users.get(StaticConfig.userid).getUserid());
-        for(Room room : StaticConfig.users.get(StaticConfig.userid).getRoomList()){
-            // 初始化
-            if(StaticConfig.nowRoomId == -1) StaticConfig.nowRoomId = room.getId();
-            comboBox1.addItem(room.getId());
-            if(!StaticConfig.rooms.containsKey(room.getId())) StaticConfig.rooms.put(room.getId(), room);
-        }
-        timer.schedule(new QueryTask(), 0, 1000); //每秒查询一次消息
-        timer.schedule(new QueryPrivateTask(), 0, 2000); //每秒查询一次私密消息
-        timer.schedule(new SendActive(), 0, 300000); // 每30秒确认一次在线
-        roomName.setText(StaticConfig.rooms.get(StaticConfig.nowRoomId).getName());
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,34 +112,40 @@ public class ChatRoom {
                 new CreateRoom();
             }
         });
-        list1.addMouseListener(new MouseListener() {
+
+        list1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
                 if(e.getClickCount() >= 2){
                     if(list1.getSelectedValue() != null){
-                        new PrivateRoom(list1.getSelectedValue());
+                        // 不能和自己聊天
+                        if(list1.getSelectedValue().equals(StaticConfig.users.get(StaticConfig.userid).getUserid())) return;
+                        StaticBuffer.OpenPrivateMessageWindows.add(list1.getSelectedValue());
+                        List<String> recentUser = StaticConfig.recentUsers.get(StaticConfig.users.get(StaticConfig.userid).getUserid());
+                        if(!recentUser.contains(list1.getSelectedValue())) recentUser.add(list1.getSelectedValue());
+                        CreatePrivateWindow createPrivateWindow = new CreatePrivateWindow(list1.getSelectedValue());
+                        createPrivateWindow.start();
                     }
                 }
             }
+        });
 
+        list2.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(e.getClickCount() >= 2){
+                    if(list2.getSelectedValue() != null){
+                        // 不能和自己聊天
+                        if(list2.getSelectedValue().equals(StaticConfig.users.get(StaticConfig.userid).getUserid())) return;
+                        StaticBuffer.OpenPrivateMessageWindows.add(list2.getSelectedValue());
+                        List<String> recentUser = StaticConfig.recentUsers.get(StaticConfig.users.get(StaticConfig.userid).getUserid());
+                        if(!recentUser.contains(list2.getSelectedValue())) recentUser.add(list2.getSelectedValue());
+                        CreatePrivateWindow createPrivateWindow = new CreatePrivateWindow(list2.getSelectedValue());
+                        createPrivateWindow.start();
+                    }
+                }
             }
         });
     }
@@ -215,6 +216,34 @@ public class ChatRoom {
         }
     }
 
+    public class UpdateTask extends TimerTask{
+        @Override
+        public synchronized void run(){
+            // 主聊天框
+            StringBuilder msgs = new StringBuilder();
+            for(Message msg : StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage()){
+                msgs.append(StaticConfig.df.format(msg.getTimestamp())).append(" ").append(msg.getUserid()).append(":").append(msg.getMassage()).append("\n");
+            }
+            textArea1.setText(msgs.toString());
+
+            // 在线列表
+            DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+            int i = 0;
+            for(User user : StaticBuffer.OnlineUser){
+                defaultListModel.add(i++, user.getUserid());
+            }
+            list1.setModel(defaultListModel);
+
+            // 最近联系人
+            defaultListModel = new DefaultListModel<>();
+            i = 0;
+            for(String userid : StaticConfig.recentUsers.get(StaticConfig.users.get(StaticConfig.userid).getUserid())){
+                defaultListModel.add(i++, userid);
+            }
+            list2.setModel(defaultListModel);
+        }
+    }
+
     public class QueryTask extends TimerTask {
         @Override
         public synchronized void run() {
@@ -232,11 +261,6 @@ public class ChatRoom {
             }
             try {
                 req.send();
-                StringBuilder msgs = new StringBuilder();
-                for(Message msg : StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage()){
-                    msgs.append(StaticConfig.df.format(msg.getTimestamp())).append(" ").append(msg.getUserid()).append(":").append(msg.getMassage()).append("\n");
-                }
-                textArea1.setText(msgs.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -245,13 +269,6 @@ public class ChatRoom {
             QueryOnlineRequest queryOnlineRequest = new QueryOnlineRequest(Utils.getNowTimestamp(), "QueryOnline", StaticConfig.nowRoomId);
             try {
                 queryOnlineRequest.send();
-                DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-                int i = 0;
-                for(User user : StaticBuffer.OnlineUser){
-                    defaultListModel.add(i++, user.getUserid());
-                }
-                ((DefaultListModel)list1.getModel()).removeAllElements();
-                list1.setModel(defaultListModel);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
