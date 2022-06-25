@@ -16,7 +16,6 @@ public class Login {
     private JButton RegisterButton;
 
     public Login() {
-
         class UpdateThread extends Thread{
             @Override
             public synchronized void run(){
@@ -27,7 +26,7 @@ public class Login {
                     if(StaticConfig.status.equals("online")){
                         QuickChat.frame.setVisible(false);
                         QuickChat.frame.setContentPane(new ChatRoom().root);
-                        QuickChat.frame.setSize(800, 400);
+                        QuickChat.frame.setSize(1520, 960);
                         QuickChat.frame.setTitle("ChatRoom");
                         QuickChat.frame.setVisible(true);
                         break;

@@ -59,11 +59,11 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="5cedf" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+              <component id="cdeec" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
                 <constraints/>
                 <properties>
+                  <contentType value="text/html"/>
                   <editable value="false"/>
-                  <enabled value="true"/>
                 </properties>
               </component>
             </children>

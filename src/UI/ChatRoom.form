@@ -134,7 +134,7 @@
                   <gridbag weightx="10.0" weighty="30.0"/>
                 </constraints>
                 <properties>
-                  <dividerLocation value="590"/>
+                  <dividerLocation value="448"/>
                   <dividerSize value="5"/>
                 </properties>
                 <border type="none"/>
@@ -165,11 +165,12 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="55a56" class="javax.swing.JTextArea" binding="textArea1">
+                          <component id="4620d" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
                             <constraints/>
                             <properties>
+                              <contentType value="text/html"/>
                               <editable value="false"/>
-                              <text value=""/>
+                              <font/>
                             </properties>
                           </component>
                         </children>
@@ -248,7 +249,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="8271" class="javax.swing.JButton" binding="发送表情Button" default-binding="true">
+                      <component id="8271" class="javax.swing.JButton" binding="EmojiButton">
                         <constraints/>
                         <properties>
                           <text value="发送表情"/>

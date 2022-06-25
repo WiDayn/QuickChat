@@ -2,14 +2,14 @@ package UI;
 
 import Chat.Message;
 import Chat.PrivateMessage;
+import Net.Request.SendMessageRequest;
 import Net.Request.SendPrivateMessageRequest;
+import Net.ServerConnection;
 import Utils.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,11 +20,17 @@ public class PrivateRoom extends JDialog {
     private JTextField textField1;
     private JTextArea textArea1;
     private JLabel titleLabel;
+    private JTextPane textPane1;
     private JButton buttonOK;
+
+    private StringBuilder lastMsgs = new StringBuilder();
 
     String userid;
 
     public PrivateRoom(String userid) {
+        Font font = new Font("Noto Sans SC", Font.BOLD, 14);
+        textPane1.setFont(font);
+
         this.userid = userid;
         titleLabel.setText("与 " +userid + " 的私密聊天");
 
@@ -56,7 +62,25 @@ public class PrivateRoom extends JDialog {
                 dispose();
             }
         });
-
+        textField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) //判断按下的键是否是回车键
+                {
+                    String message = textField1.getText();
+                    Message sendMessage = new Message(StaticConfig.users.get(StaticConfig.userid).getUserid(), Utils.getNowTimestamp(), message);
+                    StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage().add(sendMessage);
+                    SendMessageRequest sendMessageRequest = new SendMessageRequest(Utils.getNowTimestamp(), sendMessage, StaticConfig.rooms.get(StaticConfig.nowRoomId));
+                    try {
+                        ServerConnection.SendObj(sendMessageRequest);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    textField1.setText("");
+                }
+            }
+        });
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -74,10 +98,13 @@ public class PrivateRoom extends JDialog {
                 // 匹配是否是这个聊天框的消息(对比From_user和To_user)
                 if((privateMessage.getFrom_user().equals(userid) && privateMessage.getTo_user().equals(StaticConfig.users.get(StaticConfig.userid).getUserid()))
                         || privateMessage.getFrom_user().equals(StaticConfig.users.get(StaticConfig.userid).getUserid()) && privateMessage.getTo_user().equals(userid)){
-                    msgs.append(StaticConfig.df.format(privateMessage.getSendTime())).append(" ").append(privateMessage.getFrom_user()).append(":").append(privateMessage.getMessage()).append("\n");
+                    msgs.append(StaticConfig.df.format(privateMessage.getSendTime())).append(" ").append(privateMessage.getFrom_user()).append(":").append(privateMessage.getMessage()).append("<br>");
                 }
             }
-            textArea1.setText(msgs.toString());
+            if(!lastMsgs.toString().equals(msgs.toString())){
+                textPane1.setText(EmojiParsers.Decode(msgs.toString()));
+            }
+            lastMsgs = msgs;
         }
     }
 

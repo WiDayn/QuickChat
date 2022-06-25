@@ -10,15 +10,16 @@ import Net.ServerConnection;
 import Utils.Utils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.List;
 import java.util.Timer;
 
 public class ChatRoom {
     public JPanel root;
-    private JTextArea textArea1;
     private JButton button1;
     private JList<String> list1;
     private JTextField textField1;
@@ -32,11 +33,18 @@ public class ChatRoom {
     private JScrollPane Jspane;
     private JScrollPane JSpane2;
     private JButton uploadFileButton;
-    private JButton 发送表情Button;
+    private JButton EmojiButton;
     private JButton filesListButton;
     private JList<String> list2;
+    private JTextPane textPane1;
+
+    private StringBuilder lastMsgs = new StringBuilder();
 
     public ChatRoom() {
+        Font font = new Font("Noto Sans SC", Font.BOLD, 14);
+        textPane1.setFont(font);
+
+
         // 初始化
         StaticConfig.recentUsers.put(StaticConfig.users.get(StaticConfig.userid).getUserid(), new ArrayList<>());
         useridLabel.setText(StaticConfig.users.get(StaticConfig.userid).getUserid());
@@ -166,6 +174,34 @@ public class ChatRoom {
                 }
             }
         });
+        EmojiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EmojiList emojiList = new EmojiList();
+                if(emojiList.getSelcetIndex() != -1){
+                    textField1.setText(textField1.getText() + EmojiParsers.oldChar[emojiList.getSelcetIndex()]);
+                }
+            }
+        });
+        textField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) //判断按下的键是否是回车键
+                {
+                    String message = textField1.getText();
+                    Message sendMessage = new Message(StaticConfig.users.get(StaticConfig.userid).getUserid(), Utils.getNowTimestamp(), message);
+                    StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage().add(sendMessage);
+                    SendMessageRequest sendMessageRequest = new SendMessageRequest(Utils.getNowTimestamp(), sendMessage, StaticConfig.rooms.get(StaticConfig.nowRoomId));
+                    try {
+                        ServerConnection.SendObj(sendMessageRequest);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    textField1.setText("");
+                }
+            }
+        });
     }
 
     public class SendActive extends TimerTask{
@@ -240,9 +276,13 @@ public class ChatRoom {
             // 主聊天框
             StringBuilder msgs = new StringBuilder();
             for(Message msg : StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage()){
-                msgs.append(StaticConfig.df.format(msg.getTimestamp())).append(" ").append(msg.getUserid()).append(":").append(msg.getMassage()).append("\n");
+                msgs.append(StaticConfig.df.format(msg.getTimestamp())).append(" ").append(msg.getUserid()).append(":").append(msg.getMassage()).append("<br>");
             }
-            textArea1.setText(msgs.toString());
+            if(!lastMsgs.toString().equals(msgs.toString())){
+                textPane1.setText(EmojiParsers.Decode(msgs.toString()));
+            }
+            lastMsgs = msgs;
+
 
             // 在线列表
             DefaultListModel<String> defaultListModel = new DefaultListModel<>();
