@@ -12,8 +12,8 @@ public class JoinRoomFeedback extends Feedback implements Serializable {
     private int status;
     private String message;
 
-    JoinRoomFeedback(Timestamp sendTime, String type, int status, String message) {
-        super(sendTime, type);
+    public JoinRoomFeedback(Timestamp sendTime, int status, String message) {
+        super(sendTime, "JoinRoom");
         this.status = status;
         this.message = message;
     }

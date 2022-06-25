@@ -9,8 +9,8 @@ public class LoginRequest extends Request{
     private String user;
     private String password;
 
-    public LoginRequest(Timestamp sendTime, String type, String user, String password) {
-        super(sendTime, type);
+    public LoginRequest(Timestamp sendTime, String user, String password) {
+        super(sendTime, "Login");
         this.user = user;
         this.password = password;
     }

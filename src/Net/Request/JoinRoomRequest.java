@@ -12,8 +12,8 @@ public class JoinRoomRequest extends Request implements Serializable {
     private String userid;
     private int roomId;
 
-    public JoinRoomRequest(Timestamp sendTime, String type, String userid, int roomId) {
-        super(sendTime, type);
+    public JoinRoomRequest(Timestamp sendTime, String userid, int roomId) {
+        super(sendTime, "JoinRoom");
         this.userid = userid;
         this.roomId = roomId;
     }

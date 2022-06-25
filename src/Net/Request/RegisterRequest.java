@@ -13,8 +13,8 @@ public class RegisterRequest extends Request implements Serializable {
     private final String nickname;
     private final String password;
 
-    public RegisterRequest(Timestamp sendTime, String type, String userid, String nickname, String password) {
-        super(sendTime, type);
+    public RegisterRequest(Timestamp sendTime, String userid, String nickname, String password) {
+        super(sendTime, "Register");
         this.nickname = nickname;
         this.userid = userid;
         this.password = password;

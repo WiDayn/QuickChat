@@ -83,7 +83,7 @@ public class ChatRoom {
         flushRoomButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                QueryRoomRequest queryRoomRequest = new QueryRoomRequest(Utils.getNowTimestamp(), "QueryRoom", StaticConfig.users.get(StaticConfig.userid).getUserid());
+                QueryRoomRequest queryRoomRequest = new QueryRoomRequest(Utils.getNowTimestamp(), StaticConfig.users.get(StaticConfig.userid).getUserid());
                 try {
                     StaticBuffer.ReceiveFeedback = false;
                     queryRoomRequest.send();
@@ -93,7 +93,7 @@ public class ChatRoom {
                             // 初始化
                             if(StaticConfig.nowRoomId == -1) StaticConfig.nowRoomId = room.getId();
                             comboBox1.addItem(room.getId());
-                            StaticConfig.rooms.put(room.getId(), room);
+                            if(!StaticConfig.rooms.containsKey(room.getId())) StaticConfig.rooms.put(room.getId(), room);
                         }
                     }
                 } catch (IOException ex) {
@@ -208,7 +208,7 @@ public class ChatRoom {
         @Override
         public void run(){
             // 发送在线包
-            SendActiveRequest sendActiveRequest = new SendActiveRequest(Utils.getNowTimestamp(), "SendActive", StaticConfig.users.get(StaticConfig.userid).getUserid());
+            SendActiveRequest sendActiveRequest = new SendActiveRequest(Utils.getNowTimestamp(),  StaticConfig.users.get(StaticConfig.userid).getUserid());
             try {
                 sendActiveRequest.send();
             } catch (IOException e) {
@@ -324,7 +324,7 @@ public class ChatRoom {
             }
 
             // 请求当前房间在线名单
-            QueryOnlineRequest queryOnlineRequest = new QueryOnlineRequest(Utils.getNowTimestamp(), "QueryOnline", StaticConfig.nowRoomId);
+            QueryOnlineRequest queryOnlineRequest = new QueryOnlineRequest(Utils.getNowTimestamp(), StaticConfig.nowRoomId);
             try {
                 queryOnlineRequest.send();
             } catch (IOException e) {

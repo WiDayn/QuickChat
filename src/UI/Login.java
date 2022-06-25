@@ -38,7 +38,7 @@ public class Login {
         LoginButton.addActionListener(e -> {
             String user = textField1.getText();
             String password = String.valueOf(passwordField1.getPassword());
-            LoginRequest req = new LoginRequest(Utils.getNowTimestamp(), "Login", user, password);
+            LoginRequest req = new LoginRequest(Utils.getNowTimestamp(), user, password);
             try {
                 req.send();
             } catch (IOException ex) {

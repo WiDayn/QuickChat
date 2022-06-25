@@ -10,8 +10,8 @@ public class RegisterFeedback extends Feedback implements Serializable {
     private int status;
     private String message;
 
-    RegisterFeedback(Timestamp sendTime, String type, int status, String message) {
-        super(sendTime, type);
+    public RegisterFeedback(Timestamp sendTime, int status, String message) {
+        super(sendTime, "Register");
         this.message = message;
         this.status = status;
     }

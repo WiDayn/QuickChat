@@ -38,7 +38,7 @@ public class JoinRoom extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int roomId = Integer.parseInt(textField1.getText());
-                JoinRoomRequest joinRoomRequest = new JoinRoomRequest(Utils.getNowTimestamp(), "JoinRoom", StaticConfig.users.get(StaticConfig.userid).getUserid(), roomId);
+                JoinRoomRequest joinRoomRequest = new JoinRoomRequest(Utils.getNowTimestamp(), StaticConfig.users.get(StaticConfig.userid).getUserid(), roomId);
                 try {
                     joinRoomRequest.send();
                 } catch (IOException ex) {

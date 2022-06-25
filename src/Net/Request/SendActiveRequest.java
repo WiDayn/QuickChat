@@ -12,8 +12,8 @@ public class SendActiveRequest extends Request implements Serializable {
 
     private String userid;
 
-    public SendActiveRequest(Timestamp sendTime, String type, String userid) {
-        super(sendTime, type);
+    public SendActiveRequest(Timestamp sendTime, String userid) {
+        super(sendTime, "SendActive");
         this.userid = userid;
     }
 

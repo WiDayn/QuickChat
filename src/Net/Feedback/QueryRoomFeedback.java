@@ -14,8 +14,8 @@ public class QueryRoomFeedback extends Feedback implements Serializable {
     private static final long serialVersionUID = 3731817462768860430L;
     private List<Room> roomList;
 
-    public QueryRoomFeedback(Timestamp sendTime, String type, List<Room> roomList) {
-        super(sendTime, type);
+    public QueryRoomFeedback(Timestamp sendTime, List<Room> roomList) {
+        super(sendTime, "QueryRoom");
         this.roomList = roomList;
     }
 

@@ -9,8 +9,8 @@ public class QueryRoomRequest extends Request implements Serializable {
     private static final long serialVersionUID = -5970984285966095676L;
     private String userId;
 
-    public QueryRoomRequest(Timestamp sendTime, String type, String userId) {
-        super(sendTime, type);
+    public QueryRoomRequest(Timestamp sendTime, String userId) {
+        super(sendTime, "QueryRoom");
         this.userId = userId;
     }
 

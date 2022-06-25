@@ -15,4 +15,12 @@ public class Feedback implements Serializable {
         this.sendTime = sendTime;
         this.type = type;
     }
+
+    public Timestamp getSendTime() {
+        return sendTime;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

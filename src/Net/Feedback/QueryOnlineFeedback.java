@@ -15,8 +15,8 @@ public class QueryOnlineFeedback extends Feedback implements Serializable {
     private int roomId;
     private List<User> userList;
 
-    QueryOnlineFeedback(Timestamp sendTime, String type, int roomId, List<User> userList) {
-        super(sendTime, type);
+    public QueryOnlineFeedback(Timestamp sendTime, int roomId, List<User> userList) {
+            super(sendTime, "QueryOnline");
         this.roomId = roomId;
         this.userList = userList;
     }

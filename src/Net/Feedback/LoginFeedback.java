@@ -12,8 +12,8 @@ public class LoginFeedback extends Feedback{
     private String message;
     private User user;
 
-    LoginFeedback(Timestamp sendTime, String type, int status, String message, User user) {
-        super(sendTime, type);
+    public LoginFeedback(Timestamp sendTime, int status, String message, User user) {
+        super(sendTime, "Login");
         this.status = status;
         this.message = message;
         this.user = user;

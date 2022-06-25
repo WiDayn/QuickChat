@@ -44,7 +44,7 @@ public class Register {
             String userid = textField1.getText();
             String nickname = textField3.getText();
             String passwd = String.valueOf(passwordField1.getPassword());
-            RegisterRequest registerRequest = new RegisterRequest(Utils.Utils.getNowTimestamp(), "Register", userid, nickname, passwd);
+            RegisterRequest registerRequest = new RegisterRequest(Utils.Utils.getNowTimestamp(), userid, nickname, passwd);
             try {
                 ServerConnection.SendObj(registerRequest);
             } catch (IOException ex) {

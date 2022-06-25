@@ -4,16 +4,20 @@ import Chat.Room;
 import Chat.User;
 import Net.Feedback.*;
 import Net.Request.QueryUnreadPrivateMessageRequest;
+import Net.Request.Request;
 import Utils.StaticBuffer;
 import Utils.StaticConfig;
 
 public class Handler {
     public static void handler(Object obj){
-        if(obj instanceof PullMessageFeedback pullMessageFeedback){
+        Feedback req = (Feedback) obj;
+        if(req.getType().equals("PullMessage")){
+            PullMessageFeedback pullMessageFeedback = (PullMessageFeedback) obj;
             Room room = StaticConfig.rooms.get(pullMessageFeedback.getRoomId());
             room.getMessage().addAll(pullMessageFeedback.getMessages());
         }
-        if(obj instanceof LoginFeedback loginFeedback){
+        if(req.getType().equals("Login")){
+            LoginFeedback loginFeedback = (LoginFeedback) obj;
             if (loginFeedback.getStatus() == 200){
                 User user = loginFeedback.getUser();
                 StaticConfig.users.put(user.getId(), user);
@@ -23,30 +27,38 @@ public class Handler {
                 StaticBuffer.LoginMessage = loginFeedback.getMessage();
             }
         }
-        if(obj instanceof RegisterFeedback registerFeedback){
+        if(req.getType().equals("Register")){
+            RegisterFeedback registerFeedback = (RegisterFeedback) obj;
             StaticBuffer.RegisterMessage = registerFeedback.getMessage();
         }
-        if(obj instanceof QueryRoomFeedback queryRoomFeedback){
+        if(req.getType().equals("QueryRoom")){
+            QueryRoomFeedback queryRoomFeedback = (QueryRoomFeedback) obj;
             StaticConfig.users.get(StaticConfig.userid).getRoomList().clear();
             StaticConfig.users.get(StaticConfig.userid).getRoomList().addAll(queryRoomFeedback.getRoomList());
             StaticBuffer.ReceiveFeedback = true;
         }
-        if(obj instanceof QueryOnlineFeedback queryOnlineFeedback){
+        if(req.getType().equals("QueryOnline")){
+            QueryOnlineFeedback queryOnlineFeedback = (QueryOnlineFeedback) obj;
             StaticBuffer.OnlineUser.addAll(queryOnlineFeedback.getUserList());
         }
-        if(obj instanceof JoinRoomFeedback joinRoomFeedback){
+        if(req.getType().equals("JoinRoom")){
+            JoinRoomFeedback joinRoomFeedback = (JoinRoomFeedback) obj;
             StaticBuffer.JoinRoomMessage = joinRoomFeedback.getMessage();
         }
-        if(obj instanceof CreateRoomFeedback createRoomFeedback){
+        if(req.getType().equals("CreateRoom")){
+            CreateRoomFeedback createRoomFeedback = (CreateRoomFeedback) obj;
             StaticBuffer.CreateRoomMessage = createRoomFeedback.getMessage();
         }
-        if(obj instanceof PullRoomFeedback pullRoomFeedback){
+        if(req.getType().equals("PullRoom")){
+            PullRoomFeedback pullRoomFeedback = (PullRoomFeedback) obj;
             StaticBuffer.PullRoomMessage = pullRoomFeedback.getMessage();
         }
-        if(obj instanceof QueryUnreadPrivateMessageFeedback queryUnreadPrivateMessageFeedback){
+        if(req.getType().equals("QueryUnreadPrivateMessage")){
+            QueryUnreadPrivateMessageFeedback queryUnreadPrivateMessageFeedback = (QueryUnreadPrivateMessageFeedback) obj;
             StaticConfig.unreadPrivateMessages.addAll(queryUnreadPrivateMessageFeedback.getPrivateMessageList());
         }
-        if(obj instanceof QueryFilesFeedback queryFilesFeedback){
+        if(req.getType().equals("QueryFiles")){
+            QueryFilesFeedback queryFilesFeedback = (QueryFilesFeedback) obj;
             StaticBuffer.fileList.clear();
             StaticBuffer.fileList.addAll(queryFilesFeedback.getFileList());
         }

@@ -11,8 +11,8 @@ public class QueryOnlineRequest extends Request implements Serializable {
 
     private int roomId;
 
-    public QueryOnlineRequest(Timestamp sendTime, String type, int roomId) {
-        super(sendTime, type);
+    public QueryOnlineRequest(Timestamp sendTime, int roomId) {
+        super(sendTime, "QueryOnline");
         this.roomId = roomId;
     }
 
