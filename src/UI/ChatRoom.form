@@ -254,13 +254,13 @@
                           <text value="发送表情"/>
                         </properties>
                       </component>
-                      <component id="8581c" class="javax.swing.JButton" binding="上传文件Button" default-binding="true">
+                      <component id="8581c" class="javax.swing.JButton" binding="uploadFileButton">
                         <constraints/>
                         <properties>
                           <text value="上传文件"/>
                         </properties>
                       </component>
-                      <component id="2ec4a" class="javax.swing.JButton" binding="文件列表Button" default-binding="true">
+                      <component id="2ec4a" class="javax.swing.JButton" binding="filesListButton">
                         <constraints/>
                         <properties>
                           <text value="文件列表"/>

@@ -46,5 +46,9 @@ public class Handler {
         if(obj instanceof QueryUnreadPrivateMessageFeedback queryUnreadPrivateMessageFeedback){
             StaticConfig.unreadPrivateMessages.addAll(queryUnreadPrivateMessageFeedback.getPrivateMessageList());
         }
+        if(obj instanceof QueryFilesFeedback queryFilesFeedback){
+            StaticBuffer.fileList.clear();
+            StaticBuffer.fileList.addAll(queryFilesFeedback.getFileList());
+        }
     }
 }

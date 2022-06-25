@@ -6,11 +6,13 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManagerFactory;
-import java.io.*;
-import java.net.SocketException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.KeyStore;
 
-public class ServerConnection {
+public class FileServerConnection {
     private static final String TLS = "TLSv1.2";
     private static final String PROVIDER = "SunX509";
     private static final String STORE_TYPE = "JKS";
@@ -22,7 +24,7 @@ public class ServerConnection {
     public static InputStream inputStream;
     public static OutputStream outputStream;
 
-    static {
+    public FileServerConnection(){
         SSLSocket socket = null;
 
         try {
@@ -41,7 +43,7 @@ public class ServerConnection {
 
             //初始化
             sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
-            socket = (SSLSocket) sslContext.getSocketFactory().createSocket("localhost", StaticConfig.DEFAULT_PORT);
+            socket = (SSLSocket) sslContext.getSocketFactory().createSocket("localhost", StaticConfig.FILE_PORT);
             socket.setKeepAlive(true);
 
             try {
@@ -62,31 +64,12 @@ public class ServerConnection {
                 ex.printStackTrace();
             }
         }
-        ReceiveMsg receiveMsg = new ReceiveMsg();
-        receiveMsg.start();
     }
 
-    public static class ReceiveMsg extends Thread{
-        @Override
-        public synchronized void run(){
-            while(true){
-                try {
-                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(inputStream));
-                    Object obj = ois.readObject();
-                    Handler.handler(obj);
-                } catch (SocketException e){
-                    System.out.println("服务器断开连接: " + e.getMessage());
-                    break;
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
+    public InputStream getInputStream() {
+        return inputStream;
     }
-
-    public static void SendObj(Object object) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        oos.writeObject(object);
-        oos.flush();
+    public OutputStream getOutputStream() {
+        return outputStream;
     }
 }

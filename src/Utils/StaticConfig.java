@@ -26,4 +26,10 @@ public class StaticConfig {
 
     public static List<PrivateMessage> unreadPrivateMessages = new ArrayList<>();
 
+    public static final String FILE_PATH = "./Files/";
+
+    public static final int DEFAULT_PORT = 25570; // 自定义端口
+
+    public static final int FILE_PORT = 25571; // 文件传输端口
+
 }

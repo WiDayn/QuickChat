@@ -31,9 +31,9 @@ public class ChatRoom {
     private JLabel roomName;
     private JScrollPane Jspane;
     private JScrollPane JSpane2;
-    private JButton 上传文件Button;
+    private JButton uploadFileButton;
     private JButton 发送表情Button;
-    private JButton 文件列表Button;
+    private JButton filesListButton;
     private JList<String> list2;
 
     public ChatRoom() {
@@ -145,6 +145,24 @@ public class ChatRoom {
                         CreatePrivateWindow createPrivateWindow = new CreatePrivateWindow(list2.getSelectedValue());
                         createPrivateWindow.start();
                     }
+                }
+            }
+        });
+
+        uploadFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UploadFile();
+            }
+        });
+        filesListButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new FilesList();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
