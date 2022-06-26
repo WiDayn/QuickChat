@@ -6,7 +6,7 @@ import Chat.Room;
 import Chat.User;
 import Net.Request.*;
 import Utils.*;
-import Net.ServerConnection;
+import Net.ChatServerConnection;
 import Utils.Utils;
 
 import javax.swing.*;
@@ -66,7 +66,7 @@ public class ChatRoom {
             StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage().add(sendMessage);
             SendMessageRequest sendMessageRequest = new SendMessageRequest(Utils.getNowTimestamp(), sendMessage, StaticConfig.rooms.get(StaticConfig.nowRoomId));
             try {
-                ServerConnection.SendObj(sendMessageRequest);
+                ChatServerConnection.SendObj(sendMessageRequest);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -194,7 +194,7 @@ public class ChatRoom {
                     StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage().add(sendMessage);
                     SendMessageRequest sendMessageRequest = new SendMessageRequest(Utils.getNowTimestamp(), sendMessage, StaticConfig.rooms.get(StaticConfig.nowRoomId));
                     try {
-                        ServerConnection.SendObj(sendMessageRequest);
+                        ChatServerConnection.SendObj(sendMessageRequest);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

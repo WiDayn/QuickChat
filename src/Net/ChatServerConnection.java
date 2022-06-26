@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.SocketException;
 import java.security.KeyStore;
 
-public class ServerConnection {
+public class ChatServerConnection {
     private static final String TLS = "TLSv1.2";
     private static final String PROVIDER = "SunX509";
     private static final String STORE_TYPE = "JKS";

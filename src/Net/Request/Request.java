@@ -1,6 +1,6 @@
 package Net.Request;
 
-import Net.ServerConnection;
+import Net.ChatServerConnection;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -28,6 +28,6 @@ public class Request implements Serializable {
     }
 
     public void send() throws IOException {
-        ServerConnection.SendObj(this);
+        ChatServerConnection.SendObj(this);
     }
 }

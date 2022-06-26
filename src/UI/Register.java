@@ -2,7 +2,7 @@ package UI;
 
 import Main.QuickChat;
 import Net.Request.RegisterRequest;
-import Net.ServerConnection;
+import Net.ChatServerConnection;
 import Utils.StaticBuffer;
 import Utils.StaticConfig;
 
@@ -46,7 +46,7 @@ public class Register {
             String passwd = String.valueOf(passwordField1.getPassword());
             RegisterRequest registerRequest = new RegisterRequest(Utils.Utils.getNowTimestamp(), userid, nickname, passwd);
             try {
-                ServerConnection.SendObj(registerRequest);
+                ChatServerConnection.SendObj(registerRequest);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

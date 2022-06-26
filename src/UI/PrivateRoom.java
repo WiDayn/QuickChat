@@ -4,7 +4,7 @@ import Chat.Message;
 import Chat.PrivateMessage;
 import Net.Request.SendMessageRequest;
 import Net.Request.SendPrivateMessageRequest;
-import Net.ServerConnection;
+import Net.ChatServerConnection;
 import Utils.*;
 
 import javax.swing.*;
@@ -73,7 +73,7 @@ public class PrivateRoom extends JDialog {
                     StaticConfig.rooms.get(StaticConfig.nowRoomId).getMessage().add(sendMessage);
                     SendMessageRequest sendMessageRequest = new SendMessageRequest(Utils.getNowTimestamp(), sendMessage, StaticConfig.rooms.get(StaticConfig.nowRoomId));
                     try {
-                        ServerConnection.SendObj(sendMessageRequest);
+                        ChatServerConnection.SendObj(sendMessageRequest);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

@@ -1,12 +1,9 @@
 package UI;
 
 import Net.FileServerConnection;
-import Net.ServerConnection;
 import Utils.StaticConfig;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
 import java.io.*;
 
