@@ -14,7 +14,7 @@ public class SendMessageRequest extends Request{
     private Room room;
 
     public SendMessageRequest(Timestamp sendTime, Message message, Room room) {
-        super(sendTime, "SendMsg");
+        super(sendTime, "SendMessage");
         this.message = message;
         this.room = room;
     }

@@ -11,7 +11,7 @@ public class PullMessageRequest extends Request{
     private Timestamp beginTime;
     private Room room;
     public PullMessageRequest(Timestamp sendTime, Timestamp beginTime, Room room){
-        super(sendTime, "PullMsg");
+        super(sendTime, "PullMessage");
         this.beginTime = beginTime;
         this.room = room;
     }
